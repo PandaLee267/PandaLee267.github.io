@@ -246,8 +246,8 @@ body.light .trust b{color:#b45309}
 <tr><td><b>Khắc Văn Full Món</b></td><td>6 dòng + khắc văn full 12 món</td><td class="price-text">150k</td><td><button type="button" class="btn-order" onclick="toggleService('Khắc Văn Full Món (150k)',this)">Chọn gói</button></td></tr>
 <tr><td><b>Gói Vé Trân Phẩm</b></td><td>Phí nhận (20 vé) (Hỗ trợ nâng chương)</td><td class="price-text">50k</td><td><button type="button" class="btn-order" onclick="toggleService('Gói Vé Trân Phẩm (50k)',this)">Chọn gói</button></td></tr>
 <tr><td><b>Combo Tối Ưu Acc</b></td><td>Up công pháp, thú cưỡi, đồ cam 150, tối ưu mốc nạp</td><td class="price-text">150k</td><td><button type="button" class="btn-order" onclick="toggleService('Combo Tối Ưu Acc (150k)',this)">Chọn gói</button></td></tr>
-<tr><td><b>Quay Thông</b><span class="tag">MỚI</span></td><td>Quay Thông Full BK: Người – Đan Điền – Cung</td><td class="price-text">50k</td><td><button type="button" class="btn-order" onclick="toggleService('Quay Thông BK Người-Đan Điền-Cung (50k)',this)">Chọn gói</button></td></tr>
-<tr><td><b>Lấy Liên Trảm</b><span class="tag">MỚI</span></td><td>Lấy tối thiểu dao động từ 2k - 3k liên trảm</td><td class="price-text">100k</td><td><button type="button" class="btn-order" onclick="toggleService('Lấy Liên Trảm 2k-3k (100k)',this)">Chọn gói</button></td></tr>
+<tr><td><b>Quay Thông</b><span class="tag">MỚI</span></td><td>Quay Thông Full BK: Người – Đan Điền – Cung</td><td class="price-text">50k - 100k</td><td><button type="button" class="btn-order" onclick="toggleService('Quay Thông BK Người-Đan Điền-Cung (50k-100k)',this)">Chọn gói</button></td></tr>
+<tr><td><b>Lấy Liên Trảm</b><span class="tag">MỚI</span></td><td>Lấy tối thiểu dao động từ 2k - 3k liên trảm</td><td class="price-text">100k - 150k</td><td><button type="button" class="btn-order" onclick="toggleService('Lấy Liên Trảm 2k-3k (100k-150k)',this)">Chọn gói</button></td></tr>
 <tr><td><b>Sửa Acc &amp; Build Lại</b></td><td>Theo tình trạng acc</td><td class="price-text">Thỏa thuận</td><td><button type="button" class="btn-order" onclick="toggleService('Sửa Acc & Build Lại',this)">Chọn gói</button></td></tr>
 </tbody></table></div>
 </div>
@@ -317,7 +317,7 @@ function removeItem(i){const n=cart[i];cart.splice(i,1);document.querySelectorAl
 // ponytail: tổng tiền parse từ tên gói (100k/1tr) + bảng event theo số lượng. Nâng cấp khi cần giá server-side.
 const UNIT={'Tu Luyện Đặc Biệt':160000,'Tu Luyện May Mắn':35000,'Hồn Nguyên Đơn':50000};
 const FIXED={'Gói Train Trọn Gói 10k':10000,'Khắc Văn Full Món':150000,'Gói Vé Trân Phẩm':50000,'Combo Tối Ưu Acc':150000,'Sửa Acc & Build Lại':0};
-function parsePrice(s){var all=String(s).match(/(\d+(?:[.,]\d+)?)\s*(k|tr)\b/gi);if(!all)return null;var m=all[all.length-1].match(/(\d+(?:[.,]\d+)?)\s*(k|tr)\b/i);var v=parseFloat(m[1].replace(',','.'));return Math.round(v*(m[2].toLowerCase()==='tr'?1000000:1000))}
+function parsePrice(s){var g=String(s).match(/\(([^)]*)\)\s*$/);var t=g?g[1]:String(s);var m=t.match(/(\d+(?:[.,]\d+)?)\s*(k|tr)\b/i);if(!m)return null;var v=parseFloat(m[1].replace(',','.'));return Math.round(v*(m[2].toLowerCase()==='tr'?1000000:1000))}
 function fmt(v){try{return v.toLocaleString('vi-VN')+'đ'}catch(e){return v+'đ'}}
 function qtyVal(id){return parseInt((document.getElementById(id)||{}).value||'0',10)||0}
 function cartTotal(){var qDB=qtyVal('qtyDB'),qMM=qtyVal('qtyMM'),qHND=qtyVal('qtyHND');var t=0;cart.forEach(function(n){var p=parsePrice(n);if(p!=null){t+=p;return}if(n==='Tu Luyện Đặc Biệt'){if(qDB>=1000)t+=UNIT[n]*qDB/1000;return}if(n==='Tu Luyện May Mắn'){if(qMM>=1000)t+=UNIT[n]*qMM/1000;return}if(n==='Hồn Nguyên Đơn'){if(qHND>=1000)t+=UNIT[n]*qHND/1000;return}if(FIXED[n]!=null)t+=FIXED[n]});return {total:t,qDB:qDB,qMM:qMM,qHND:qHND}}
